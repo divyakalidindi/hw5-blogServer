@@ -14,6 +14,17 @@ export const createPost = (req, res) => {
   });
 };
 
+// this cleans the posts because we use id instead of dangling _id
+// and we purposefully don't return content here either
+const cleanPosts = (posts) => {
+  return posts.map(post => {
+    return { id: post._id, title: post.title, tags: post.tags };
+  });
+};
+
+const cleanAPost = (post) => {
+  return { id: post._id, title: post.title, tags: post.tags };
+};
 export const getPosts = (req, res) => {
   Post.find()
     .then(posts => {
@@ -23,13 +34,13 @@ export const getPosts = (req, res) => {
       res.json({ error });
     });
 };
-// Clean post or cleanposts?
-// export const getPost = (req, res) => {
-//   Post.findById(req.params.id)
-//   then (post => {
-//     res.json(cleanPosts(post));
-//   });
-// };
+
+export const getPost = (req, res) => {
+  Post.findById(req.params.id)
+  .then(post => {
+    res.json(cleanAPost(post));
+  });
+};
 
 export const deletePost = (req, res) => {
   Post.remove({ _id: req.params.id })
@@ -41,22 +52,12 @@ export const deletePost = (req, res) => {
   });
 };
 
-
 export const updatePost = (req, res) => {
-  // Post.findOneAndUpdate() (_id: , { title: req.body.title etc. })
+  Post.findOneAndUpdate({ _id: req.params.id }, { title: req.body.title, tags: req.body.tags, content: req.body.content })
   .then(() => {
     res.json({ message: 'Post updated!' });
   })
   .catch(error => {
     res.json({ error });
-  });
-
-};
-
-// this cleans the posts because we use id instead of dangling _id
-// and we purposefully don't return content here either
-const cleanPosts = (posts) => {
-  return posts.map(post => {
-    return { id: post._id, title: post.title, tags: post.tags };
   });
 };
