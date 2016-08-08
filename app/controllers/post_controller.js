@@ -1,6 +1,7 @@
 import Post from '../models/post_model';
 
 export const createPost = (req, res) => {
+  console.log('new');
   const post = new Post();
   post.title = req.body.title;
   post.tags = req.body.tags;
@@ -53,6 +54,7 @@ export const deletePost = (req, res) => {
 };
 
 export const updatePost = (req, res) => {
+  console.log('update');
   Post.findOneAndUpdate({ _id: req.params.id }, { title: req.body.title, tags: req.body.tags, content: req.body.content })
   .then(() => {
     res.json({ message: 'Post updated!' });
