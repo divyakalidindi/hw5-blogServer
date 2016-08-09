@@ -56,22 +56,23 @@ export const deletePost = (req, res) => {
 
 // example of using error handling: http://codereview.stackexchange.com/questions/65199/mongoose-promise-error-handling
 export const updatePost = (req, res) => {
-  if ((req.body.title === '') || (req.body.tags === '') || (req.body.contents === '')) {
-    Post.findById(req.params.id, (error, docs) => {
-      if (error) {
-        res.send(error);
+  if ((req.body.title === '') || (req.body.tags === '') || (req.body.content === '')) {
+    console.log('1');
+    Post.findById(req.params.id, (err, docs) => {
+      if (err) {
+        res.send(err);
       }
       const updates = { id: docs._id, title: docs.title, tags: docs.tags, content: docs.content };
       res.json(updates);
     });
   } else {
-    Post.update({ _id: req.params.id }, { title: req.body.title, tags: req.body.tags, content: req.body.content }, (error, raw) => {
-      if (error) {
-        res.send(error);
+    Post.update({ _id: req.params.id }, { title: req.body.title, tags: req.body.tags, content: req.body.content }, (err, raw) => {
+      if (err) {
+        res.send(err);
       }
-      Post.findById(req.params.id, (e, docs) => {
-        if (e) {
-          res.send(e);
+      Post.findById(req.params.id, (err, docs) => {
+        if (err) {
+          res.send(err);
         }
         const updates = { id: docs._id, title: docs.title, tags: docs.tags, content: docs.content };
         res.json(updates);
