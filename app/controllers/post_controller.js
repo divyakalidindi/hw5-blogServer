@@ -24,7 +24,7 @@ const cleanPosts = (posts) => {
 };
 
 const cleanAPost = (post) => {
-  return { id: post._id, title: post.title, tags: post.tags };
+  return { id: post._id, title: post.title, tags: post.tags, content: post.content };
 };
 export const getPosts = (req, res) => {
   Post.find()
