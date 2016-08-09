@@ -79,11 +79,4 @@ export const updatePost = (req, res) => {
       });
     });
   }
-  // Post.findOneAndUpdate({ _id: req.params.id }, { title: req.body.title, tags: req.body.tags, content: req.body.content })
-  // .then(() => {
-  //   res.json({ message: 'Post updated!' });
-  // })
-  // .catch(error => {
-  //   res.json({ error });
-  // });
 };
