@@ -1,9 +1,7 @@
-# starter express app template
+# starter express app template - HW5 part 2
 
 * node with babel
 * expressjs
 * airbnb eslint rules
 
 Procfile set up to run on [heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app)
-
-
