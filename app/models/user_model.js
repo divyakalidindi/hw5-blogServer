@@ -31,7 +31,7 @@ UserSchema.methods.comparePassword = function comparePassword(candidatePassword,
     }
     callback(null, isMatch);
   });
-)};
+};
 
 const UserModel = mongoose.model('User', UserSchema);
 
