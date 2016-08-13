@@ -1,7 +1,6 @@
 import Post from '../models/post_model';
 
 export const createPost = (req, res) => {
-  console.log('new');
   const post = new Post();
   post.title = req.body.title;
   post.tags = req.body.tags;
@@ -16,17 +15,19 @@ export const createPost = (req, res) => {
   });
 };
 
+const cleanAPost = (post) => {
+  return { id: post._id, title: post.title, tags: post.tags, content: post.content, author: post.author };
+};
+
 // this cleans the posts because we use id instead of dangling _id
 // and we purposefully don't return content here either
 const cleanPosts = (posts) => {
   return posts.map(post => {
-    return { id: post._id, title: post.title, tags: post.tags };
+    // return { id: post._id, title: post.title, tags: post.tags };
+    return cleanAPost(post);
   });
 };
 
-const cleanAPost = (post) => {
-  return { id: post._id, title: post.title, tags: post.tags, content: post.content, author: post.author };
-};
 export const getPosts = (req, res) => {
   Post.find()
     .populate('author')
@@ -37,8 +38,6 @@ export const getPosts = (req, res) => {
       res.json({ error });
     });
 };
-
-
 export const getPost = (req, res) => {
   Post.findById(req.params.id)
   .populate('author')
