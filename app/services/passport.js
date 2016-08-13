@@ -3,13 +3,10 @@ import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 
-// and import User and your config with the secret
 import User from '../models/user_model';
 import dotenv from 'dotenv';
 dotenv.config({ silent: true });
 
-// options for local strategy, we'll use email AS the username
-// not have separate ones
 const localOptions = { usernameField: 'email' };
 
 // options for jwt strategy
@@ -20,12 +17,8 @@ const jwtOptions = {
   secretOrKey: process.env.API_SECRET,
 };
 
-
 // username + password authentication strategy
 const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
-  // Verify this email and password, call done with the user
-// if it is the correct email and password
-// otherwise, call done with false
   User.findOne({ email }, (err, user) => {
     if (err) { return done(err); }
     if (!user) { return done(null, false); }
