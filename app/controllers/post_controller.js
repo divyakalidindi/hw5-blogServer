@@ -72,13 +72,19 @@ export const updatePost = (req, res) => {
       if (err) {
         res.send(err);
       }
-      Post.findById(req.params.id, (err, docs) => {
-        if (err) {
-          res.send(err);
-        }
-        const updates = { id: docs._id, title: docs.title, tags: docs.tags, content: docs.content };
-        res.json(updates);
+      Post.findById(req.params.id).populate('author').then(result => {
+        res.json(result);
+      })
+      .catch(error => {
+
       });
+      // , (err, docs) => {
+      //   if (err) {
+      //     res.send(err);
+      //   }
+      //   const updates = { id: docs._id, title: docs.title, tags: docs.tags, content: docs.content };
+      //   res.json(updates);
+      // });
     });
   }
 };
