@@ -1,9 +1,9 @@
 import jwt from 'jwt-simple';
 import User from '../models/user_model.js';
-// import dotenv from 'dotenv';
-//
-// dotenv.config({ silent: true });
-import config from '../../config';
+import dotenv from 'dotenv';
+
+dotenv.config({ silent: true });
+// import config from '../../config';
 
 export const signin = (req, res, next) => {
   res.send({ token: tokenForUser(req.user) });
@@ -29,5 +29,5 @@ export const signup = (req, res, next) => {
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
+  return jwt.encode({ sub: user.id, iat: timestamp }, process.env.API_SECRET);
 }

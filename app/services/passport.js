@@ -4,9 +4,9 @@ import LocalStrategy from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 
 import User from '../models/user_model';
-// import dotenv from 'dotenv';
-// dotenv.config({ silent: true });
-import config from '../../config';
+import dotenv from 'dotenv';
+dotenv.config({ silent: true });
+// import config from '../../config';
 
 const localOptions = { usernameField: 'email' };
 
@@ -15,7 +15,7 @@ const localOptions = { usernameField: 'email' };
 // so passport can find it there
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-  secretOrKey: config.secret,
+  secretOrKey: process.env.API_SECRET,
 };
 
 // username + password authentication strategy
