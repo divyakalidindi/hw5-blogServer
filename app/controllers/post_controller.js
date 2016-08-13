@@ -6,6 +6,7 @@ export const createPost = (req, res) => {
   post.title = req.body.title;
   post.tags = req.body.tags;
   post.content = req.body.content;
+  post.author = req.user._id;
   post.save()
   .then(result => {
     res.json({ message: 'Post created!' });
@@ -24,10 +25,11 @@ const cleanPosts = (posts) => {
 };
 
 const cleanAPost = (post) => {
-  return { id: post._id, title: post.title, tags: post.tags, content: post.content };
+  return { id: post._id, title: post.title, tags: post.tags, content: post.content, author: post.author };
 };
 export const getPosts = (req, res) => {
   Post.find()
+    .populate('author')
     .then(posts => {
       res.json(cleanPosts(posts));
     })
@@ -39,6 +41,7 @@ export const getPosts = (req, res) => {
 
 export const getPost = (req, res) => {
   Post.findById(req.params.id)
+  .populate('author')
   .then(post => {
     res.json(cleanAPost(post));
   });

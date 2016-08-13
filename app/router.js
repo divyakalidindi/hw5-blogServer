@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as Posts from './controllers/post_controller';
-import * as UserController from './controllers/user_controller';
+import * as Users from './controllers/user_controller';
 import { requireAuth, requireSignin } from './services/passport';
 
 
@@ -19,7 +19,7 @@ router.route('/posts/:id')
   .put(requireAuth, Posts.updatePost)
   .delete(requireAuth, Posts.deletePost);
 
-router.post('/signin', requireSignin, UserController.signin);
-router.post('/signup', UserController.signup);
+router.post('/signin', requireSignin, Users.signin);
+router.post('/signup', Users.signup);
 
 export default router;

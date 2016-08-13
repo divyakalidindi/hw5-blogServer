@@ -1,9 +1,9 @@
 import jwt from 'jwt-simple';
 import User from '../models/user_model.js';
-import dotenv from 'dotenv';
-
-dotenv.config({ silent: true });
-
+// import dotenv from 'dotenv';
+//
+// dotenv.config({ silent: true });
+import config from '../../config';
 
 export const signin = (req, res, next) => {
   res.send({ token: tokenForUser(req.user) });
@@ -20,14 +20,14 @@ export const signup = (req, res, next) => {
   .then(result => {
     return res.status(422).send('That email is already taken!');
   });
-  const newUser = new User();
-  newUser.email = email;
-  newUser.password = password;
-  newUser.save();
-  res.send({ token: tokenForUser(newUser) });
+  const user = new User();
+  user.email = email;
+  user.password = password;
+  user.save();
+  res.send({ token: tokenForUser(user) });
 };
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timestamp }, process.env.API_SECRET);
+  return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
 }
